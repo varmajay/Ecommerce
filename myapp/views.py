@@ -27,39 +27,41 @@ def register(request):
     return render(request,'register.html',{'form':form})
 
 def user_login(request):
-    # if request.user.is_authenticated:
-    #     if request.user.role == 'admin':
-    #         return redirect('index_admin')
-    #     else:
-    #         return redirect('index')
-    # else:
-    if request.method =="POST":
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user = authenticate(email = form.cleaned_data['email'],password = form.cleaned_data['password'])
-            if user is not None:
-                if user.verify ==True:
-                    if user.is_staff == True:
-                        login(request, user)
-                        return redirect('index-admin')
-                    elif user.role =='seller':
-                        login(request, user)
-                        return redirect('index-seller')
-                    else:
-                        login(request, user)
-                        return redirect('index')
-                else:
-                    messages.info(request,'Your account not verify Yet,Please Wait sometime')
-                    logout(request)
-                    return redirect('login')
-            else:
-                messages.info(request,'Invalid Email and Password')
-                return render(request,'login.html',{'form':form})
-        messages.info(request,'Invalid Email and Password')
-        return render(request,'login.html',{'form':form})
+    if request.user.is_authenticated:
+        if request.user.role == 'seller':
+            return redirect('index-seller')
+        elif request.user.role == 'buyer':
+            return redirect('index')
+        else:
+            return redirect('index-admin')
     else:
-        form = LoginForm()
-    return render(request,'login.html',{'form':form})
+        if request.method =="POST":
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                user = authenticate(email = form.cleaned_data['email'],password = form.cleaned_data['password'])
+                if user is not None:
+                    if user.verify ==True:
+                        if user.is_staff == True:
+                            login(request, user)
+                            return redirect('index-admin')
+                        elif user.role =='seller':
+                            login(request, user)
+                            return redirect('index-seller')
+                        else:
+                            login(request, user)
+                            return redirect('index')
+                    else:
+                        messages.info(request,'Your account not verify Yet,Please Wait sometime')
+                        logout(request)
+                        return redirect('login')
+                else:
+                    messages.info(request,'Invalid Email and Password')
+                    return render(request,'login.html',{'form':form})
+            messages.info(request,'Invalid Email and Password')
+            return render(request,'login.html',{'form':form})
+        else:
+            form = LoginForm()
+        return render(request,'login.html',{'form':form})
 
 
 def user_logout(request):
