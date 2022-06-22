@@ -1,0 +1,50 @@
+{% extends 'header.html'%}
+{% block content %}
+
+<div class="container">
+	{% if buy %}
+	<div class="check">	 
+		 <div class="col-md-9 cart-items">
+			 <h1>My Buys({{count}})</h1>
+			
+			 {% for data in buy %}
+			 <div class="cart-header">
+				 <div class="cart-sec simpleCart_shelfItem">
+						<div class="cart-item cyc">
+							 <img src="{{data.product.pic.url}}" class="img-responsive" alt=""/>
+						</div>
+					   <div class="cart-item-info">
+						<h3><a href="">{{data.product.product_name}}</a><span>Details 	: {{data.product.description}}</span></h3>
+						<ul class="qty">
+						</ul>
+						<form action="" method="POST">
+						<div class="price">
+							<span class="text">Quantity:</span>{{data.quantity}}
+						</div>
+						<div class="btn_form">
+                            <a href="{% url 'cancel-order' data.id %}">Cancel Order</a>
+						</div>
+					</form>
+				
+							 <div class="delivery">
+							 <p>Order Date : {{data.ordered_date}}</p>
+							 <span>Delivered Status :{{data.status}}</span>
+							 <div class="clearfix"></div>
+				        </div>	
+					   </div>
+					   <div class="clearfix"></div>
+											
+				  </div>
+			 </div>
+			 {% endfor %}
+			 {% else %}
+			 <h3 style="color: red;">Don't Have Any Product in Your Cart </h3>
+			 {% endif %}
+		 </div>
+		 
+		
+			<div class="clearfix"> </div>
+	 </div>
+	 </div>
+
+{% endblock %}

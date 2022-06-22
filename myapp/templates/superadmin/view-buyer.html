@@ -1,0 +1,84 @@
+{% extends 'superadmin/header.html'%}
+{% load static %}
+{% block content %}
+
+<style>
+    table {
+        counter-reset: tableCount;
+    }
+
+    .counterCell:before {
+        content: counter(tableCount);
+        counter-increment: tableCount;
+    }
+</style>
+<!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-body">
+
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">View Buyer</a></li>
+            </ol>
+        </div>
+    </div>
+    <!-- row -->
+    <!-- /# column -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>View Buyer </h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Gender</th>
+                                    <th>Address</th>
+                                    <th>Image</th>
+                                    <th>Verify</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for buyer in uid %}
+                                <tr>
+                                    <td>{{buyer.name}}</td>
+                                    <td>{{buyer.email}}</td>
+                                    <td>{{buyer.phone}}</td>
+                                    <td>{{buyer.gender}}</td>
+                                    <td>{{buyer.address}}</td>
+                                    <td><img src="{{buyer.profile.url}}" alt="" style="height: 50px; width: 50px;"></td>
+                                    <td>
+                                    <a href="{% url 'verify-buyer' buyer.id %}">
+                                        <button type="button" class="btn mb-1 btn-flat btn-outline-success">Verify</button>
+                                    </a>
+                                    <td>
+                                        <span> <a href="{% url 'delete-buyer' buyer.id %}" data-toggle="tooltip"
+                                                data-placement="top" title="delete"><i class="fa fa-trash "
+                                                    style="color: red;"></i></a></span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /# card -->
+        </div>
+        {% for msg in messages %}
+        <script>
+            alert("{{msg}}")
+        </script>
+        {% endfor %}
+        {% endblock %}

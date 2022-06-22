@@ -1,0 +1,66 @@
+{% extends 'header.html'%}
+{% load static %}
+{% block content %}
+
+<!-- content -->
+<div class="container">
+<div class="main">
+	<!-- start registration -->
+	<div class="registration">
+		<div class="registration_left">
+		<h2>Checkout</h2>
+		 <div class="registration_form">
+		 <!-- Form -->
+			<form id="registration_form" action="{% url 'checkout'%}" method="post">
+                {% csrf_token %}
+					<label>Total Amount 
+						<input placeholder="" type="text" tabindex="1" required autofocus value="{{final}}" disabled> 
+					</label>
+				</div>
+				<div>
+					<label>Address
+						{{form.address}}
+					</label>
+				</div>
+                <div>
+					<label>Payment Method
+						{{form.payment_method}}
+					</label>
+				</div>
+				<div>
+					<input type="submit" value="Place Your Order" id="register-submit">
+				</div>
+			</form>
+			<!-- /Form -->
+		</div>
+	</div>
+	<div class="registration_left">
+		<h2>Your Oder Details </h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Product Name</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
+              <th>Image</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for data in cart %}
+            <tr>
+              <td>{{data.product.product_name}}</td>
+              <td>{{data.quantity}}</td>
+              <td>{{data.product.price}}</td>
+              <td><img src="{{data.product.pic.url}}" alt="" style="height: 50px; width: 50px;"></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+	</div>
+	<div class="clearfix"></div>
+	</div>
+	<!-- end registration -->
+</div>
+</div>
+
+{% endblock %}

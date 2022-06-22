@@ -1,0 +1,173 @@
+{% extends 'seller/seller-header.html'%}
+{% load static %}
+{% block content %}
+<div class="main-panel">
+    <!-- BEGIN : Main Content-->
+    <div class="main-content">
+        <div class="content-wrapper">
+            <!-- Form actions layout section start -->
+            <style>
+                .account-settings .user-profile {
+                    margin: 0 0 1rem 0;
+                    padding-bottom: 1rem;
+                    text-align: center;
+                }
+
+                .account-settings .user-profile .user-avatar {
+                    margin: 0 0 1rem 0;
+                }
+
+                .account-settings .user-profile .user-avatar img {
+                    width: 150px;
+                    height: 200px;
+                    -webkit-border-radius: 200px;
+                    -moz-border-radius: 200px;
+                    border-radius: 200px;
+                }
+
+                .account-settings .user-profile h5.user-name {
+                    margin: 0 0 0.5rem 0;
+                }
+
+                .account-settings .user-profile h6.user-email {
+                    margin: 0;
+                    font-size: 0.8rem;
+                    font-weight: 400;
+                }
+
+                .account-settings .about {
+                    margin: 1rem 0 0 0;
+                    font-size: 0.8rem;
+                    text-align: center;
+                }
+
+                .card {
+
+                    -webkit-border-radius: 5px;
+                    -moz-border-radius: 5px;
+                    border-radius: 5px;
+                    border: 0;
+                    margin-bottom: 1rem;
+                    background-image: url("{% static 'app-assets/img/gallery/bg-glass-2.jpg'%}");
+                }
+
+                .form-control {
+                    border: 1px solid #596280;
+                    -webkit-border-radius: 2px;
+                    -moz-border-radius: 2px;
+                    border-radius: 2px;
+                    font-size: .825rem;
+
+                    color: #bcd0f7;
+                }
+            </style>
+            <!--**********************************
+            Content body start
+        ***********************************-->
+            <div class="content-body">
+
+                <div class="row page-titles mx-0">
+
+                </div>
+                <!-- row -->
+
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token%}
+                    <div class="container">
+                        <div class="row gutters">
+                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="account-settings">
+                                            <div class="user-profile">
+                                                <div class="user-avatar"><br>
+                                                    <br>
+                                                    <img src="{{request.user.profile.url}}" alt="profile">
+                                                </div>
+                                                <h5 class="user-name" style="color: rgb(27, 18, 18);">
+                                                    {{request.user.name}}</h5>
+                                                <h6 class="user-email" style="color: rgb(19, 18, 18);">
+                                                    {{request.user.email}}</h6>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <form action="" method="post" enctype="multipart/form-data">
+                                            {% csrf_token%}
+                                        <div class="row gutters">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <h1 class="mb-3 text-primary" style="color: white;">Edit Profile</h1>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="fullName">Role</label>
+                                                    {{form.role}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="fullName">Name</label>
+                                                    {{form.name}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="eMail">Email</label>
+                                                    {{form.email}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="website">Gender</label>
+                                                    {{form.gender}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="phone">Phone</label>
+                                                    {{form.phone}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="website">Address</label>
+                                                    {{form.address}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="website">Profile</label>
+                                                    {{form.profile}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <div class="text-right"  style="padding-left: 400px;">
+                                                  <button type="submit" id="submit" name="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                              </div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+
+                <!-- // Form actions layout section end -->
+
+            </div>
+        </div>
+
+        <!-- #/ container -->
+    </div>
+    {% for msg in messages %}
+    <script>
+        alert("{{msg}}")
+    </script>
+    {% endfor %}
+    {% endblock %}

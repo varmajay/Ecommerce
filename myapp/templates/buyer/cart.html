@@ -1,0 +1,189 @@
+{% extends 'header.html'%}
+{% block content %}
+<style>
+	* {
+	  padding: 0;
+	  margin: 0;
+	  -webkit-box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  box-sizing: border-box;
+	}
+	
+	body {
+	  padding: 15px 0;
+	}
+	
+	.num-block {
+		float: left;
+		width: 100%;
+	  padding: 15px 30px;
+	}
+	
+	/* skin 1 */
+	.skin-1 .num-in {
+		float: left;
+		width: 94px;}
+	
+	.skin-1 .num-in span {
+		display: block;
+		float: left;
+		width: 30px;
+		height: 32px;
+		line-height: 32px;
+		text-align: center;
+		position: relative;
+		cursor: pointer;
+	}
+	
+	.skin-1 .num-in span.dis:before {
+	  background-color: #ccc !important;
+	}
+	
+	.skin-1 .num-in input {
+		float: left;
+		width: 32px;
+		height: 32px;
+		border: 1px solid #6E6F7A;
+		border-radius: 5px;
+		color: #000;
+		text-align: center;
+		padding: 0;
+	}
+	
+	.skin-1 .num-in span.minus:before {
+		content: '';
+		position: absolute;
+		width: 15px;
+		height: 2px;
+		background-color: #00A94F;
+		top: 50%;
+		left: 0;
+	}
+	
+	.skin-1 .num-in span.plus:before, .skin-1 .num-in span.plus:after {
+		content: '';
+		position: absolute;
+		right: 0px;
+		width: 15px;
+		height: 2px;
+		background-color: #00A94F;
+		top: 50%;
+	}
+	
+	.skin-1 .num-in span.plus:after {
+		-webkit-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		-o-transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
+	
+	/* / skin 1 */
+	
+	</style>
+<div class="container">
+	{% if cart %}
+	<div class="check">	 
+			 <div class="col-md-3 cart-total">
+			 <div class="price-details">
+				 <h3>Price Details</h3>
+				 <span>Total</span>
+				 <span class="total1">{{amount}}</span>
+				 <span>Discount</span>
+				 <span class="total1">---</span>
+				 <span>Delivery Charges</span>
+				 <span class="total1">150.00</span>
+				 <div class="clearfix"></div>				 
+			 </div>	
+			 <ul class="total_price">
+			   <li class="last_price"> <h4>TOTAL</h4></li>	
+			   <li class="last_price"><span>{{final}}</span></li>
+			   <div class="clearfix"> </div>
+			 </ul>
+			
+			 
+			 <div class="clearfix"></div>
+			 <a class="order" href="{% url 'checkout'%}">Place Order</a>
+			 
+			</div>
+		 <div class="col-md-9 cart-items">
+			 <h1>My Shopping Bag ({{count}})</h1>
+			
+			 {% for data in cart %}
+			 <div class="cart-header">
+				 <a href="{% url 'remove-cart' data.id %}"><div class="close1"> </div></a>
+				 <div class="cart-sec simpleCart_shelfItem">
+						<div class="cart-item cyc">
+							 <img src="{{data.product.pic.url}}" class="img-responsive" alt=""/>
+						</div>
+					   <div class="cart-item-info">
+						<h3><a href="">{{data.product.product_name}}</a><span>Details 	: {{data.product.description}}</span></h3>
+						<ul class="qty">
+						</ul>
+						<form action="{% url 'update-cart' data.id %}" method="POST">
+							{% csrf_token %}
+						<div class="price">
+							<span class="text">Quantity:</span>
+							<div class="num-block skin-1">
+								<div class="num-in">
+								  <span class="minus dis"></span>
+								  <input type="text" class="in-num" value="{{data.quantity}}"  name="quantity">
+								  <span class="plus"></span>
+								</div>
+							  </div>
+						</div>
+						<div class="registration_form btn_form">
+							<input type="submit" value="Add more">
+						</div>
+					</form>
+				
+							 <div class="delivery">
+							 <p>Service Charges : Rs.100.00</p>
+							 <span>Delivered in 2-3 bussiness days</span>
+							 <div class="clearfix"></div>
+				        </div>	
+					   </div>
+					   <div class="clearfix"></div>
+											
+				  </div>
+			 </div>
+			 {% endfor %}
+			 {% else %}
+			 <h3 style="color: red;">Don't Have Any Product in Your Cart </h3>
+			 {% endif %}
+		 </div>
+		 
+		
+			<div class="clearfix"> </div>
+	 </div>
+	 </div>
+	 <script>
+		$(document).ready(function() {
+		  $('.num-in span').click(function () {
+			  var $input = $(this).parents('.num-block').find('input.in-num');
+			if($(this).hasClass('minus')) {
+			  var count = parseFloat($input.val()) - 1;
+			  count = count < 1 ? 1 : count;
+			  if (count < 2) {
+				$(this).addClass('dis');
+			  }
+			  else {
+				$(this).removeClass('dis');
+			  }
+			  $input.val(count);
+			}
+			else {
+			  var count = parseFloat($input.val()) + 1
+			  $input.val(count);
+			  if (count > 1) {
+				$(this).parents('.num-block').find(('.minus')).removeClass('dis');
+			  }
+			}
+			
+			$input.change();
+			return false;
+		  });
+		  
+		});
+		// product +/-
+		</script>
+{% endblock %}
